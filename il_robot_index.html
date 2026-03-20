@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IL Robot Index — Q1 2026 | Infinite Labor</title>
+<meta name="description" content="The Infinite Labor quarterly analyst scorecard for humanoid robots, robotics companies, and automation investments. Q1 2026 edition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#12110e;--paper:#f5f2ea;--red:#bf3318;--muted:#7a7265;
+  --rule:#d4cfc3;--dark:#1a1814;--darker:#0e0d0b;--card:#eceae0;
+  --green:#1D9E75;--blue:#378ADD;--amber:#BA7517;--danger:#E24B4A;
+  --display:'Bebas Neue',sans-serif;--mono:'IBM Plex Mono',monospace;
+  --serif:'Source Serif 4',Georgia,serif;
+}
+body{background:var(--paper);color:var(--ink);font-family:var(--mono);min-height:100vh}
+
+/* MASTHEAD */
+.mh{background:var(--darker);padding:0}
+.mh-inner{max-width:960px;margin:0 auto;padding:1.5rem 2rem 0}
+.mh-meta{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:2px;color:#3a3630;text-transform:uppercase;margin-bottom:1rem;flex-wrap:wrap;gap:6px}
+.mh-meta a{color:#3a3630;text-decoration:none}
+.mh-meta a:hover{color:#bf3318}
+.brand{font-family:var(--display);font-size:56px;color:#f0ece2;letter-spacing:3px;line-height:0.9}
+.brand span{color:var(--red)}
+.mh-sub{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#4a4640;text-transform:uppercase;margin-top:6px;padding-bottom:1rem}
+.mh-rule{border:none;border-top:1px solid #2a2620}
+.mh-bottom{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0;flex-wrap:wrap;gap:8px}
+.edition{font-family:var(--display);font-size:20px;color:#3a3630;letter-spacing:2px}
+.sub-cta{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border:1px solid var(--red);padding:5px 14px}
+.sub-cta:hover{background:var(--red);color:white}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:2rem}
+
+/* INTRO */
+.intro{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--rule)}
+@media(max-width:600px){.intro{grid-template-columns:1fr}}
+.intro-hed{font-family:var(--display);font-size:38px;line-height:1;letter-spacing:0.5px;color:var(--ink);margin-bottom:0.75rem}
+.intro-body{font-family:var(--serif);font-size:14px;line-height:1.8;color:var(--muted)}
+.intro-body p{margin-bottom:0.75rem}
+.intro-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-card{background:var(--card);padding:1rem}
+.stat-num{font-family:var(--display);font-size:36px;color:var(--ink);letter-spacing:1px}
+.stat-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* METHODOLOGY */
+.method{background:var(--darker);padding:1.25rem 1.5rem;margin-bottom:2rem}
+.method-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:0.75rem}
+.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media(max-width:600px){.method-grid{grid-template-columns:1fr 1fr}}
+.method-item{}
+.method-name{font-size:11px;font-weight:500;color:#9a9080;margin-bottom:3px}
+.method-weight{font-family:var(--display);font-size:24px;color:var(--red);letter-spacing:1px}
+.method-desc{font-size:10px;color:#4a4640;line-height:1.6;margin-top:4px}
+
+/* CONTROLS */
+.controls{display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap;margin-bottom:1.25rem;padding:1.25rem;background:var(--card);border:0.5px solid var(--rule)}
+.ctrl-group{display:flex;flex-direction:column;gap:8px}
+.ctrl-group-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
+.ctrl-group-label span{color:var(--red);margin-right:4px}
+.ctrl-btns{display:flex;gap:6px;flex-wrap:wrap}
+.ctrl-btn{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border:0.5px solid var(--rule);cursor:pointer;background:var(--paper);color:var(--muted);transition:all 0.15s}
+.ctrl-btn:hover{border-color:var(--ink);color:var(--ink)}
+.ctrl-btn.on{background:var(--red);color:white;border-color:var(--red)}
+.ctrl-sep{width:1px;height:20px;background:var(--rule);margin:0 4px}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin-bottom:2rem}
+.scorecard{width:100%;border-collapse:collapse;min-width:600px}
+.scorecard thead tr{border-bottom:2px solid var(--ink)}
+.scorecard th{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:8px 10px;text-align:left;cursor:pointer;white-space:nowrap;user-select:none}
+.scorecard th:hover{color:var(--ink)}
+.scorecard th.sorted{color:var(--red)}
+.scorecard th:not(:first-child){text-align:center}
+.scorecard td{padding:12px 10px;border-bottom:0.5px solid var(--rule);vertical-align:middle}
+.scorecard tbody tr{cursor:pointer;transition:background 0.1s}
+.scorecard tbody tr:hover td{background:var(--card)}
+.scorecard tbody tr.active td{background:var(--card);border-bottom-color:var(--ink)}
+.rank{font-family:var(--display);font-size:20px;color:var(--rule);min-width:30px;display:inline-block}
+.co-name{font-size:14px;font-weight:500;color:var(--ink)}
+.co-ticker{font-size:10px;color:var(--muted);margin-left:6px}
+.co-meta{font-size:10px;color:var(--muted);margin-top:2px;margin-left:30px}
+.score-cell{text-align:center}
+.score-num{font-size:15px;font-weight:500;color:var(--ink)}
+.score-bar{height:3px;border-radius:1px;margin:4px auto 0;max-width:48px}
+.total-cell{text-align:center}
+.grade-badge{font-size:13px;font-weight:500;padding:4px 12px;border-radius:2px;display:inline-block;font-family:var(--mono)}
+.g-a{background:#E1F5EE;color:#085041}
+.g-b{background:#E6F1FB;color:#0C447C}
+.g-c{background:#FAEEDA;color:#633806}
+.g-d{background:#FCEBEB;color:#791F1F}
+
+/* DETAIL */
+.detail{background:var(--card);border:1px solid var(--rule);padding:1.75rem;margin-bottom:2rem;display:none}
+.detail.show{display:block}
+.detail-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--rule)}
+.detail-name{font-family:var(--display);font-size:40px;line-height:1;letter-spacing:1px;color:var(--ink)}
+.detail-meta{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px}
+.detail-grade{font-family:var(--display);font-size:48px;letter-spacing:2px}
+.detail-pillars{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+@media(max-width:500px){.detail-pillars{grid-template-columns:1fr}}
+.pillar{border-top:3px solid var(--rule);padding-top:1rem}
+.pillar-name{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.pillar-score{font-family:var(--display);font-size:36px;line-height:1;margin-bottom:0.75rem}
+.pillar-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--rule);font-size:11px}
+.pillar-item:last-child{border-bottom:none}
+.pillar-item-label{color:var(--muted)}
+.pillar-item-val{font-weight:500;color:var(--ink);flex-shrink:0}
+.detail-thesis{font-family:var(--serif);font-size:14px;line-height:1.8;color:var(--muted);padding:1rem;background:var(--paper);border-left:3px solid var(--red)}
+.detail-thesis strong{color:var(--ink);font-weight:600}
+
+/* LEGEND */
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:2rem;padding:1rem;background:var(--card);font-size:10px;color:var(--muted)}
+.leg{display:flex;align-items:center;gap:6px}
+.leg-dot{width:10px;height:10px;border-radius:1px;flex-shrink:0}
+
+/* FOOTER */
+.footer{background:var(--darker);padding:1.5rem 2rem}
+.footer-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-brand{font-family:var(--display);font-size:24px;color:#f0ece2;letter-spacing:2px}
+.footer-brand span{color:var(--red)}
+.footer-links{display:flex;gap:16px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+.footer-links a{color:#4a4640;text-decoration:none}
+.footer-links a:hover{color:var(--red)}
+.footer-disc{font-size:10px;color:#3a3630;line-height:1.6;margin-top:1rem;max-width:960px;margin:1rem auto 0}
+
+@media(max-width:600px){
+  .brand{font-size:40px}
+  .main{padding:1.25rem}
+  .method-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="mh">
+  <div class="mh-inner">
+    <div class="mh-meta">
+      <span><a href="https://infinitelabor.substack.com">infinitelabor.substack.com</a></span>
+      <span>Free weekly newsletter</span>
+    </div>
+    <div class="brand">INFINITE<br>LA<span>B</span>OR</div>
+    <div class="mh-sub">Agents · Robots · Automation · The future of work</div>
+    <div class="mh-rule"></div>
+    <div class="mh-bottom">
+      <div class="edition">IL Robot Index — Q1 2026</div>
+      <a href="https://infinitelabor.substack.com" class="sub-cta">Subscribe free →</a>
+    </div>
+  </div>
+</div>
+
+
+
+  </div>
+
+<div class="main">
+    <div>
+      <div class="intro-hed">The Quarterly Analyst Scorecard for Physical AI</div>
+      <div class="intro-body">
+        <p>Every quarter, Infinite Labor scores the companies building the automation economy across four pillars: hardware capability, software and AI, business viability, and supply chain resilience.</p>
+        <p>Scores are analyst estimates based on public announcements, funding data, deployment reports, and industry analysis. This is not investment advice.</p>
+        <p>Click any company to see the full pillar breakdown.</p>
+      </div>
+    </div>
+    <div class="intro-stats">
+      <div class="stat-card">
+        <div class="stat-num">10</div>
+        <div class="stat-label">Companies scored</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Pillars · 25% each</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Q1</div>
+        <div class="stat-label">2026 Edition</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Free</div>
+        <div class="stat-label">Always open access</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="method">
+    <div class="method-label">Scoring methodology — four pillars, equal weight</div>
+    <div class="method-grid">
+      <div class="method-item">
+        <div class="method-name">Hardware</div>
+        <div class="method-weight">25%</div>
+        <div class="method-desc">Physical capability — payload, dexterity, speed, battery, uptime, manufacturing scale</div>
+      </div>
+      <div class="method-item">
+        <div class="method-name">Software / AI</div>
+        <div class="method-weight">25%</div>
+        <div class="method-desc">Intelligence — task success, generalization, learning speed, OTA updates, data flywheel</div>
+      </div>
+      <div class="method-item">
+        <div class="method-name">Business</div>
+        <div class="method-weight">25%</div>
+        <div class="method-desc">Viability — revenue, deployments, funding runway, customer concentration, valuation risk</div>
+      </div>
+      <div class="method-item">
+        <div class="method-name">Supply chain</div>
+        <div class="method-weight">25%</div>
+        <div class="method-desc">Resilience — component sourcing, geopolitical exposure, vertical integration, lead times</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="controls">
+    <div class="ctrl-group">
+      <div class="ctrl-group-label"><span>①</span> Sort by pillar</div>
+      <div class="ctrl-btns" id="sort-group">
+        <button class="ctrl-btn on" onclick="sortBy('total',this)">Overall score</button>
+        <button class="ctrl-btn" onclick="sortBy('hardware',this)">Hardware</button>
+        <button class="ctrl-btn" onclick="sortBy('software',this)">Software / AI</button>
+        <button class="ctrl-btn" onclick="sortBy('business',this)">Business</button>
+        <button class="ctrl-btn" onclick="sortBy('supply',this)">Supply chain</button>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-group-label"><span>②</span> Company type</div>
+      <div class="ctrl-btns" id="filter-group">
+        <button class="ctrl-btn on" onclick="filterType('all',this)">All companies</button>
+        <button class="ctrl-btn" onclick="filterType('Public',this)">Public only</button>
+        <button class="ctrl-btn" onclick="filterType('Private',this)">Private only</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="scorecard">
+      <thead>
+        <tr>
+          <th onclick="sortBy('total',null)">Company</th>
+          <th onclick="sortBy('hardware',null)">HW</th>
+          <th onclick="sortBy('software',null)">SW/AI</th>
+          <th onclick="sortBy('business',null)">Biz</th>
+          <th onclick="sortBy('supply',null)">Supply</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>A (80–100) — category leader</div>
+    <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>B (60–79) — strong position</div>
+    <div class="leg"><div class="leg-dot" style="background:#BA7517"></div>C (40–59) — developing</div>
+    <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>D (0–39) — early / high risk</div>
+  </div>
+
+  <div id="detail" class="detail"></div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">INFINITE LA<span>B</span>OR</div>
+    <div class="footer-links">
+      <a href="https://infinitelabor.substack.com">Newsletter</a>
+      <a href="https://infinitelabor.substack.com">Subscribe</a>
+      <a href="https://twitter.com/infinitelabor">Twitter</a>
+    </div>
+  </div>
+  <div class="footer-disc">
+    IL Robot Index scores are analyst estimates based on public data. Not investment advice. Scores updated quarterly. © 2026 Infinite Labor.
+  </div>
+</div>
+
+<script>
+const companies = [
+  {
+    name:"Nvidia",ticker:"NVDA",type:"Public",cat:"Picks & Shovels",
+    hardware:72,software:95,business:98,supply:78,
+    hw:[["GPU compute leadership","10/10"],["Jetson robotics chips","8/10"],["Edge inference capability","8/10"],["Not a robot maker — limited HW","6/10"]],
+    sw:[["CUDA dominance","10/10"],["Isaac robot training platform","9/10"],["Omniverse simulation","9/10"],["Foundation models for robotics","9/10"]],
+    biz:[["Revenue & margins","10/10"],["Data center growth","10/10"],["Robotics still small % of rev","8/10"],["Pricing power","10/10"]],
+    sup:[["TSMC dependency","7/10"],["US/Taiwan geopolitical risk","7/10"],["Export restriction exposure","7/10"],["Demand > supply — constrained","9/10"]],
+    thesis:"The compute substrate for all physical AI. Every robot needs Nvidia to train and often to run. Wins regardless of who wins the hardware war.",
+  },
+  {
+    name:"Intuitive Surgical",ticker:"ISRG",type:"Public",cat:"Industrial Robot",
+    hardware:88,software:75,business:92,supply:82,
+    hw:[["Da Vinci proven at scale","9/10"],["Precision and dexterity","9/10"],["Miniaturization capability","9/10"],["Consumer/general humanoid: N/A","—"]],
+    sw:[["Surgical AI assistance","8/10"],["Procedure data flywheel","8/10"],["Limited generalization","7/10"],["AI roadmap developing","7/10"]],
+    biz:[["Recurring instrument revenue","10/10"],["Hospital lock-in","10/10"],["Pricing power","9/10"],["Global deployment scale","9/10"]],
+    sup:[["US-centric manufacturing","9/10"],["Low Chinese component dependency","8/10"],["Proprietary supply chain","8/10"],["Instrument consumables recurring","9/10"]],
+    thesis:"The template for robotics monetization at scale. Proven RaaS model, hospital lock-in, data flywheel. Study this company.",
+  },
+  {
+    name:"Figure AI",ticker:"FIGURE",type:"Private",cat:"Humanoid",
+    hardware:78,software:82,business:68,supply:52,
+    hw:[["Figure 03 capable hardware","8/10"],["Dexterity — 16 DoF hands","8/10"],["5hr battery for real work shifts","8/10"],["BotQ manufacturing scaling","7/10"]],
+    sw:[["Helix VLA model","8/10"],["Real-world training data (BMW)","9/10"],["OTA update capability","8/10"],["Generalization still proving","8/10"]],
+    biz:[["$39B valuation — priced for perfection","6/10"],["BMW + UPS deployments","8/10"],["$1.9B runway","9/10"],["100k unit target is ambitious","6/10"]],
+    sup:[["Actuator sourcing unclear","5/10"],["Battery supply dependency","5/10"],["BotQ manufacturing early stage","5/10"],["US manufacturing — geopolitical plus","6/10"]],
+    thesis:"Best-capitalized US pure-play humanoid. Helix is the real product. Real deployments prove commercial viability. Valuation is the primary risk.",
+  },
+  {
+    name:"Tesla / Optimus",ticker:"TSLA",type:"Public",cat:"Humanoid",
+    hardware:72,software:78,business:75,supply:85,
+    hw:[["Optimus hardware iterating fast","8/10"],["In-house actuator development","8/10"],["Gigafactory real-world testing","9/10"],["Production in hundreds not thousands","6/10"]],
+    sw:[["FSD data transfer to humanoids","8/10"],["Dojo training infrastructure","8/10"],["Vision-only approach — bold bet","7/10"],["Grok/AI integration roadmap","8/10"]],
+    biz:[["Internal deployment paying off","8/10"],["Brand risk from Musk","6/10"],["Cross-subsidized by auto margins","7/10"],["Public market liquidity","8/10"]],
+    sup:[["Vertical integration — best in class","9/10"],["In-house actuators","9/10"],["Gigafactory manufacturing scale","9/10"],["Battery supply secured","9/10"]],
+    thesis:"Most vertically integrated player. If Optimus works at scale, it becomes the largest robotics company by far. Supply chain is the strongest of any humanoid maker.",
+  },
+  {
+    name:"Apptronik",ticker:"APPTRONIK",type:"Private",cat:"Humanoid",
+    hardware:72,software:68,business:62,supply:55,
+    hw:[["Apollo modular design","7/10"],["NASA heritage reliability","8/10"],["Swappable battery packs","8/10"],["Smaller scale than Figure/Tesla","6/10"]],
+    sw:[["AI roadmap developing","7/10"],["RaaS software platform","7/10"],["Less real-world data than rivals","6/10"],["OTA updates enabled","7/10"]],
+    biz:[["$520M raise — strong signal","8/10"],["Dual RaaS + capital sales model","7/10"],["GXO, Mercedes deployments","7/10"],["Smaller customer base","6/10"]],
+    sup:[["Modular design aids supply","6/10"],["Component sourcing unclear","5/10"],["US-based manufacturing","6/10"],["Scale limitations","5/10"]],
+    thesis:"NASA pedigree gives reliability credibility. Modular design is smart. $520M raise validates the thesis. Watch deployment velocity.",
+  },
+  {
+    name:"ABB Robotics",ticker:"ABB",type:"Public",cat:"Industrial Robot",
+    hardware:82,software:65,business:78,supply:80,
+    hw:[["Industrial arm reliability proven","9/10"],["Precision manufacturing arms","8/10"],["Wide product portfolio","8/10"],["Not a humanoid player","7/10"]],
+    sw:[["Omniverse integration","7/10"],["AI roadmap early stage","6/10"],["Software behind pure-play AI cos","6/10"],["ERP/MES integration strong","7/10"]],
+    biz:[["Real revenue — $4B+ robotics","8/10"],["Global customer base","8/10"],["Slower growth than pure-plays","7/10"],["Dividend paying — mature","8/10"]],
+    sup:[["Diversified global manufacturing","8/10"],["Low single-customer dependency","9/10"],["European manufacturing base","8/10"],["Component diversification","8/10"]],
+    thesis:"Industrial robotics cash flow funds the AI transition. NVIDIA partnership signals they know the software era is coming.",
+  },
+  {
+    name:"Symbotic",ticker:"SYM",type:"Public",cat:"Industrial Robot",
+    hardware:80,software:78,business:70,supply:72,
+    hw:[["Warehouse robot proven at scale","8/10"],["Speed and throughput class-leading","8/10"],["Purpose-built — not general","8/10"],["Palletizing dexterity strong","8/10"]],
+    sw:[["AI orchestration layer","8/10"],["Warehouse optimization AI","8/10"],["Symbotic platform proprietary","8/10"],["Generalization limited by design","7/10"]],
+    biz:[["Walmart = massive but risky","7/10"],["Real deployed revenue","8/10"],["GreenBox JV expanding TAM","7/10"],["Customer concentration risk","5/10"]],
+    sup:[["US manufacturing","7/10"],["Component supply maturing","7/10"],["Less Chinese exposure than humanoids","8/10"],["Scale benefits developing","7/10"]],
+    thesis:"Proven warehouse automation at Walmart scale. Real revenue, real deployments. Customer concentration is the single biggest risk.",
+  },
+  {
+    name:"Physical Intelligence",ticker:"PI",type:"Private",cat:"AI / Agents",
+    hardware:30,software:88,business:45,supply:60,
+    hw:[["No hardware — pure software","—"],["Partners with hardware makers","5/10"],["Hardware-agnostic by design","7/10"],["Not a hardware risk","—"]],
+    sw:[["π0 foundation model","9/10"],["Generalization across robots","9/10"],["Top AI research talent","9/10"],["Real-world task performance","8/10"]],
+    biz:[["$400M raised — well funded","7/10"],["No revenue yet","4/10"],["Platform licensing model unclear","5/10"],["Deepmind/Google competition","4/10"]],
+    sup:[["No manufacturing dependency","8/10"],["Compute dependency on Nvidia","6/10"],["Cloud infrastructure costs high","6/10"],["No physical supply chain risk","8/10"]],
+    thesis:"If they crack general robot intelligence, they license to every hardware maker. The GPT moment for physical AI.",
+  },
+  {
+    name:"UiPath",ticker:"PATH",type:"Public",cat:"Software Automation",
+    hardware:15,software:68,business:62,supply:88,
+    hw:[["No hardware","—"],["RPA is software-only","—"],["Not a robotics hardware player","—"],["N/A","—"]],
+    sw:[["RPA platform mature","7/10"],["AI integration underway","7/10"],["Being commoditized by LLMs","5/10"],["Platform switching costs","7/10"]],
+    biz:[["Real enterprise revenue","7/10"],["Customer base sticky","7/10"],["Growth slowing vs AI natives","6/10"],["Acquisition target potential","7/10"]],
+    sup:[["Pure software — minimal risk","9/10"],["Cloud infrastructure only","9/10"],["No manufacturing dependency","9/10"],["Geopolitically neutral","9/10"]],
+    thesis:"Existential threat from AI agents doing RPA natively. Either gets acquired or pivots hard to agentic automation. Clock is ticking.",
+  },
+  {
+    name:"Unitree Robotics",ticker:"UNITREE",type:"Private",cat:"Humanoid",
+    hardware:75,software:62,business:58,supply:55,
+    hw:[["G1 at $13,500 — price disruption","8/10"],["Walking capability strong","8/10"],["Rapid hardware iteration","8/10"],["Quality vs price tradeoffs","6/10"]],
+    sw:[["AI capabilities developing","6/10"],["Less training data than US peers","6/10"],["Open-source community strength","7/10"],["OTA updates enabled","6/10"]],
+    biz:[["Price point opens new markets","8/10"],["US export restriction risk","4/10"],["Government support (China)","7/10"],["Revenue scale unclear","5/10"]],
+    sup:[["China-centric — geopolitical risk","4/10"],["Component vertical integration","6/10"],["Domestic supply chain resilient","6/10"],["US market access uncertain","4/10"]],
+    thesis:"The price floor setter. G1 at $13,500 changes the market dynamics for everyone. Either forces US cost cuts or proves hardware commoditization.",
+  },
+];
+
+let sortField='total', filterField='all', activeRow=null;
+
+function total(c){return Math.round((c.hardware+c.software+c.business+c.supply)/4)}
+function grade(s){return s>=80?'A':s>=60?'B':s>=40?'C':'D'}
+function gClass(s){return s>=80?'g-a':s>=60?'g-b':s>=40?'g-c':'g-d'}
+function barColor(s){return s>=80?'#1D9E75':s>=60?'#378ADD':s>=40?'#BA7517':'#E24B4A'}
+function pillarColor(p){return p==='hw'?'#378ADD':p==='sw'?'#7F77DD':p==='biz'?'#1D9E75':'#BA7517'}
+
+function renderBar(s){
+  return `<div class="score-bar" style="width:${Math.round(s*0.48)}px;background:${barColor(s)}"></div>`;
+}
+
+function render(){
+  let data=[...companies];
+  if(filterField!=='all') data=data.filter(c=>c.type===filterField);
+  if(sortField==='total') data.sort((a,b)=>total(b)-total(a));
+  else data.sort((a,b)=>b[sortField]-a[sortField]);
+
+  document.getElementById('tbody').innerHTML=data.map((c,i)=>{
+    const t=total(c);
+    return `<tr id="row-${c.name.replace(/\s/g,'-')}" onclick="toggleDetail('${c.name}')">
+      <td>
+        <span class="rank">${String(i+1).padStart(2,'0')}</span>
+        <span class="co-name">${c.name}</span>
+        ${c.ticker!==c.name?`<span class="co-ticker">${c.ticker}</span>`:''}
+        <div class="co-meta">${c.type} · ${c.cat}</div>
+      </td>
+      <td class="score-cell"><div class="score-num">${c.hardware}</div>${renderBar(c.hardware)}</td>
+      <td class="score-cell"><div class="score-num">${c.software}</div>${renderBar(c.software)}</td>
+      <td class="score-cell"><div class="score-num">${c.business}</div>${renderBar(c.business)}</td>
+      <td class="score-cell"><div class="score-num">${c.supply}</div>${renderBar(c.supply)}</td>
+      <td class="total-cell"><span class="grade-badge ${gClass(t)}">${grade(t)} · ${t}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleDetail(name){
+  const c=companies.find(x=>x.name===name);
+  const panel=document.getElementById('detail');
+  const t=total(c);
+
+  if(activeRow===name){
+    panel.classList.remove('show');
+    document.querySelectorAll('.scorecard tbody tr').forEach(r=>r.classList.remove('active'));
+    activeRow=null;
+    return;
+  }
+  activeRow=name;
+  document.querySelectorAll('.scorecard tbody tr').forEach(r=>r.classList.remove('active'));
+  document.getElementById(`row-${name.replace(/\s/g,'-')}`)?.classList.add('active');
+
+  function pillar(label,field,score,items,color){
+    const rows=items.map(([k,v])=>`<div class="pillar-item"><span class="pillar-item-label">${k}</span><span class="pillar-item-val">${v}</span></div>`).join('');
+    return `<div class="pillar" style="border-top-color:${color}">
+      <div class="pillar-name">${label}</div>
+      <div class="pillar-score" style="color:${color}">${score}</div>
+      ${rows}
+    </div>`;
+  }
+
+  panel.innerHTML=`
+    <div class="detail-top">
+      <div>
+        <div class="detail-name">${c.name} ${c.ticker!==c.name?`<span style="font-size:18px;color:var(--muted)">${c.ticker}</span>`:''}</div>
+        <div class="detail-meta">${c.type} · ${c.cat} · Q1 2026</div>
+      </div>
+      <div class="detail-grade ${gClass(t)}" style="font-family:var(--display);font-size:48px;letter-spacing:2px;padding:8px 20px">${grade(t)} · ${t}</div>
+    </div>
+    <div class="detail-pillars">
+      ${pillar('Hardware',  'hw', c.hardware, c.hw, '#378ADD')}
+      ${pillar('Software / AI','sw',c.software,c.sw,'#7F77DD')}
+      ${pillar('Business',  'biz',c.business, c.biz,'#1D9E75')}
+      ${pillar('Supply chain','sup',c.supply,  c.sup,'#BA7517')}
+    </div>
+    <div class="detail-thesis"><strong>IL Thesis:</strong> ${c.thesis}</div>
+  `;
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function sortBy(field,btn){
+  sortField=field;
+  document.querySelectorAll('#sort-group .ctrl-btn').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  render();
+}
+
+function filterType(type,btn){
+  filterField=type;
+  document.querySelectorAll('#filter-group .ctrl-btn').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
