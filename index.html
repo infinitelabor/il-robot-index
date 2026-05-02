@@ -238,11 +238,11 @@
     <div class="col-header"><div class="col-label">01 / Overview</div><div class="col-title">Robot categories</div></div>
     <div id="cat-list"></div>
   </div>
-  <div class="column col2" id="col2"><div class="mobile-back" onclick="mobileBack(1)"><span class="mobile-back-arrow">←</span> Back to Categories</div>
+  <div class="column col2" id="col2"><div class="mobile-back" id="back-to-cats"><span class="mobile-back-arrow">←</span> Back to Categories</div>
     <div class="col-header"><div class="col-label">02 / Sub-types</div><div class="col-title" id="col2-title">—</div></div>
     <div id="sub-list"></div>
   </div>
-  <div class="column col3" id="col3"><div class="mobile-back" onclick="mobileBack(2)"><span class="mobile-back-arrow">←</span> Back to Sub-types</div><div id="detail-content"></div></div>
+  <div class="column col3" id="col3"><div class="mobile-back" id="back-to-subs"><span class="mobile-back-arrow">←</span> Back to Sub-types</div><div id="detail-content"></div></div>
 
 </main>
 <script>
@@ -526,17 +526,28 @@ function updateBreadcrumb(catName, subName, color) {
 
 renderCategories();
 
+document.getElementById('back-to-cats').addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  console.log('[BACK] Going to categories');
+  document.body.classList.remove('mobile-view-sub');
+  document.body.classList.remove('mobile-view-detail');
+  console.log('[BACK] Body classes now:', document.body.className);
+});
+
+document.getElementById('back-to-subs').addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  console.log('[BACK] Going to sub-types');
+  document.body.classList.remove('mobile-view-detail');
+  document.body.classList.add('mobile-view-sub');
+  console.log('[BACK] Body classes now:', document.body.className);
+});
+
+// Backwards compat
 window.mobileBack = function(level) {
-  console.log('mobileBack called with level:', level);
-  if (level === 1) {
-    document.body.classList.remove('mobile-view-sub');
-    document.body.classList.remove('mobile-view-detail');
-    console.log('Removed both classes, body classes:', document.body.className);
-  } else if (level === 2) {
-    document.body.classList.remove('mobile-view-detail');
-    document.body.classList.add('mobile-view-sub');
-    console.log('Set to mobile-view-sub, body classes:', document.body.className);
-  }
+  if (level === 1) document.getElementById('back-to-cats').click();
+  else if (level === 2) document.getElementById('back-to-subs').click();
 };
 </script>
 </body>
