@@ -126,34 +126,37 @@
       flex: none !important;
     }
 
-    /* Default: only col1 visible */
-    .col1 { transform: translateX(0); z-index: 1; }
-    .col2 { 
-      transform: translateX(100%); 
+    /* Default: only col1 visible. Override .col2.visible/.col3.visible from desktop. */
+    .col1 { transform: translateX(0) !important; z-index: 1; }
+    .col2, .col2.visible { 
+      transform: translateX(100%) !important; 
+      width: 100vw !important;
       opacity: 1 !important; 
       pointer-events: all !important; 
       z-index: 2; 
     }
-    .col3 { 
-      transform: translateX(100%); 
+    .col3, .col3.visible { 
+      transform: translateX(100%) !important; 
+      width: 100vw !important;
+      min-width: 0 !important;
       opacity: 1 !important; 
       pointer-events: all !important; 
       z-index: 3; 
     }
-    .col3.visible { 
-      width: 100vw !important; 
-      min-width: 0 !important; 
-    }
 
-    /* When viewing sub-types */
-    body.mobile-view-sub .col1 { transform: translateX(-100%); }
-    body.mobile-view-sub .col2 { transform: translateX(0); }
-    body.mobile-view-sub .col3 { transform: translateX(100%); }
+    /* When viewing sub-types — force overrides */
+    body.mobile-view-sub .col1 { transform: translateX(-100%) !important; }
+    body.mobile-view-sub .col2,
+    body.mobile-view-sub .col2.visible { transform: translateX(0) !important; }
+    body.mobile-view-sub .col3,
+    body.mobile-view-sub .col3.visible { transform: translateX(100%) !important; }
 
-    /* When viewing detail */
-    body.mobile-view-detail .col1 { transform: translateX(-100%); }
-    body.mobile-view-detail .col2 { transform: translateX(-100%); }
-    body.mobile-view-detail .col3 { transform: translateX(0); }
+    /* When viewing detail — force overrides */
+    body.mobile-view-detail .col1 { transform: translateX(-100%) !important; }
+    body.mobile-view-detail .col2,
+    body.mobile-view-detail .col2.visible { transform: translateX(-100%) !important; }
+    body.mobile-view-detail .col3,
+    body.mobile-view-detail .col3.visible { transform: translateX(0) !important; }
 
     /* Detail page styling */
     .detail-img-wrap { height: 240px; width: 100%; }
@@ -191,32 +194,30 @@
     .detail-img-wrap { height: 200px; }
   }
 
-  .mobile-home { display: none; }
+  .mobile-back { display: none; }
   @media (max-width: 768px) {
-    .mobile-home {
+    .mobile-back {
       display: flex !important;
       align-items: center;
-      justify-content: center;
       gap: 8px;
       padding: 14px 16px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: #6cf2c4;
       cursor: pointer;
       border-bottom: 1px solid var(--border);
-      background: rgba(108, 242, 196, 0.1);
+      background: rgba(108, 242, 196, 0.08);
       position: sticky;
       top: 0;
       z-index: 100;
       pointer-events: auto !important;
       user-select: none;
-      -webkit-tap-highlight-color: rgba(108, 242, 196, 0.3);
-      font-weight: 600;
+      -webkit-tap-highlight-color: rgba(108, 242, 196, 0.2);
     }
-    .mobile-home:active { background: rgba(108, 242, 196, 0.25); }
-    .mobile-home-icon { font-size: 16px; }
+    .mobile-back:active { background: rgba(108, 242, 196, 0.18); }
+    .mobile-back:hover { color: var(--text-primary); }
+    .mobile-back-arrow { font-size: 16px; }
   }
 
   /* Constrain detail content on wide desktop screens */
@@ -240,22 +241,14 @@
     <div class="col-header"><div class="col-label">01 / Overview</div><div class="col-title">Robot categories</div></div>
     <div id="cat-list"></div>
   </div>
-  <div class="column col2" id="col2"><div class="mobile-home" onclick="goHome()"><span class="mobile-home-icon">⌂</span> Home</div>
+  <div class="column col2" id="col2"><div class="mobile-back" id="back-to-cats"><span class="mobile-back-arrow">←</span> Back to Categories</div>
     <div class="col-header"><div class="col-label">02 / Sub-types</div><div class="col-title" id="col2-title">—</div></div>
     <div id="sub-list"></div>
   </div>
-  <div class="column col3" id="col3"><div class="mobile-home" onclick="goHome()"><span class="mobile-home-icon">⌂</span> Home</div><div id="detail-content"></div></div>
+  <div class="column col3" id="col3"><div class="mobile-back" id="back-to-subs"><span class="mobile-back-arrow">←</span> Back to Sub-types</div><div id="detail-content"></div></div>
 
 </main>
 <script>
-function goHome() {
-  document.body.classList.remove('mobile-view-sub');
-  document.body.classList.remove('mobile-view-detail');
-  document.getElementById('col2').classList.remove('visible');
-  document.getElementById('col3').classList.remove('visible');
-}
-window.goHome = goHome;
-
 // img: URL string = loads directly   |   img: null = shows clickable search placeholder
 const DATA = [
   { id:'fixed-post', num:'01', name:'Fixed-Post', tagline:'Anchored precision work', market:'$54B (2026) · 11.7% CAGR', color:'#4A9EFF',
@@ -536,7 +529,29 @@ function updateBreadcrumb(catName, subName, color) {
 
 renderCategories();
 
+document.getElementById('back-to-cats').addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  console.log('[BACK] Going to categories');
+  document.body.classList.remove('mobile-view-sub');
+  document.body.classList.remove('mobile-view-detail');
+  console.log('[BACK] Body classes now:', document.body.className);
+});
 
+document.getElementById('back-to-subs').addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  console.log('[BACK] Going to sub-types');
+  document.body.classList.remove('mobile-view-detail');
+  document.body.classList.add('mobile-view-sub');
+  console.log('[BACK] Body classes now:', document.body.className);
+});
+
+// Backwards compat
+window.mobileBack = function(level) {
+  if (level === 1) document.getElementById('back-to-cats').click();
+  else if (level === 2) document.getElementById('back-to-subs').click();
+};
 </script>
 </body>
 </html>
